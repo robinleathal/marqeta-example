@@ -1,0 +1,11 @@
+marqeta:
+  application-token: ${APPLICATION_TOKEN}
+  admin-access-token: ${ADMIN_ACCESS_TOKEN}
+  hostname: sandbox-api.marqeta.com
+  secure: true
+  base-uri: /v3
+logging:
+  level:
+    com.gitlab.johnjvester: DEBUG
+server:
+  port: 9999
