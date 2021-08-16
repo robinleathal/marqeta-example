@@ -48,7 +48,9 @@ Additionally, the following properties exist in the `application.yml`:
 
 ## Preparing Marqeta For Use 
 
-Before starting the Spring Boot repository, some data needs to be configured in Marqeta.
+Before starting the Spring Boot repository, some data needs to be configured in Marqeta, which is summarized in the following illustration:
+
+![Marqeta User to Card](MarqetaUserToCard.png)
 
 ### Creating a User
 
