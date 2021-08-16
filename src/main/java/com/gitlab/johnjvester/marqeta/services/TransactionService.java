@@ -7,8 +7,8 @@ import com.gitlab.johnjvester.marqeta.models.responses.MarqetaTransactionRespons
 import com.gitlab.johnjvester.marqeta.utils.MarqetaUtils;
 import lombok.RequiredArgsConstructor;
 import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
+import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.springframework.stereotype.Service;
@@ -26,18 +26,19 @@ public class TransactionService {
         List<NameValuePair> nameValuePairs = new ArrayList<>();
         nameValuePairs.add(new BasicNameValuePair("user_token", userToken));
 
-        HttpResponse httpResponse = MarqetaUtils.marqetaGet(marqetaConfigurationProperties, "/transactions", nameValuePairs);
-        HttpEntity httpEntity = httpResponse.getEntity();
+        try (CloseableHttpResponse closeableHttpResponse = MarqetaUtils.marqetaGet(marqetaConfigurationProperties, "/transactions", nameValuePairs)) {
+            HttpEntity httpEntity = closeableHttpResponse.getEntity();
 
-        if (httpEntity != null) {
-            MarqetaTransactionResponse marqetaTransactionResponse = objectMapper.readValue(EntityUtils.toString(httpEntity), MarqetaTransactionResponse.class);
+            if (httpEntity != null) {
+                MarqetaTransactionResponse marqetaTransactionResponse = objectMapper.readValue(EntityUtils.toString(httpEntity), MarqetaTransactionResponse.class);
 
-            if (marqetaTransactionResponse != null) {
-                return marqetaTransactionResponse.getTransactions();
+                if (marqetaTransactionResponse != null) {
+                    return marqetaTransactionResponse.getTransactions();
+                }
             }
-        }
 
-        return new ArrayList<>();
+            return new ArrayList<>();
+        }
     }
 
 }

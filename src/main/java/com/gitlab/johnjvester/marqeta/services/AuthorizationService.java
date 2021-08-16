@@ -2,7 +2,8 @@ package com.gitlab.johnjvester.marqeta.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gitlab.johnjvester.marqeta.configs.MarqetaConfigurationProperties;
-import com.gitlab.johnjvester.marqeta.models.responses.MarqetaPingResponse;
+import com.gitlab.johnjvester.marqeta.models.requests.MarqetaTransactionRequest;
+import com.gitlab.johnjvester.marqeta.models.responses.MarqetaTransactionPostResponse;
 import com.gitlab.johnjvester.marqeta.utils.MarqetaUtils;
 import lombok.RequiredArgsConstructor;
 import org.apache.http.HttpEntity;
@@ -12,19 +13,19 @@ import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
-public class PingService {
+public class AuthorizationService {
     private final MarqetaConfigurationProperties marqetaConfigurationProperties;
     private final ObjectMapper objectMapper;
 
-    public MarqetaPingResponse ping() throws Exception {
-        try (CloseableHttpResponse closeableHttpResponse = MarqetaUtils.marqetaGet(marqetaConfigurationProperties, "/ping", null)) {
+    public MarqetaTransactionPostResponse postTransaction(MarqetaTransactionRequest request) throws Exception {
+        try (CloseableHttpResponse closeableHttpResponse = MarqetaUtils.marqetaPost(marqetaConfigurationProperties, "/simulate/authorization", null, objectMapper.writeValueAsString(request))) {
             HttpEntity httpEntity = closeableHttpResponse.getEntity();
 
             if (httpEntity != null) {
-                return objectMapper.readValue(EntityUtils.toString(httpEntity), MarqetaPingResponse.class);
+                return objectMapper.readValue(EntityUtils.toString(httpEntity), MarqetaTransactionPostResponse.class);
             }
 
-            throw new Exception("An error occurred attempting to ping the Marqeta service");
+            return null;
         }
     }
 }

@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class Balances {
-    @JsonProperty("USD")
+    @JsonProperty(value = "USD")
     @JsonAlias(value = "USD")
     private CurrencyBalance usd;
 }

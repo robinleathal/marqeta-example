@@ -7,7 +7,7 @@ import com.gitlab.johnjvester.marqeta.models.responses.MarqetaCardResponse;
 import com.gitlab.johnjvester.marqeta.utils.MarqetaUtils;
 import lombok.RequiredArgsConstructor;
 import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.util.EntityUtils;
 import org.springframework.stereotype.Service;
 
@@ -21,17 +21,18 @@ public class CardService {
     private final ObjectMapper objectMapper;
 
     public List<Card> getCardsByUserToken(String userToken) throws Exception {
-        HttpResponse httpResponse = MarqetaUtils.marqetaGet(marqetaConfigurationProperties, "/cards/user/" + userToken, null);
-        HttpEntity httpEntity = httpResponse.getEntity();
+        try (CloseableHttpResponse closeableHttpResponse = MarqetaUtils.marqetaGet(marqetaConfigurationProperties, "/cards/user/" + userToken, null)) {
+            HttpEntity httpEntity = closeableHttpResponse.getEntity();
 
-        if (httpEntity != null) {
-            MarqetaCardResponse marqetaCardResponse = objectMapper.readValue(EntityUtils.toString(httpEntity), MarqetaCardResponse.class);
+            if (httpEntity != null) {
+                MarqetaCardResponse marqetaCardResponse = objectMapper.readValue(EntityUtils.toString(httpEntity), MarqetaCardResponse.class);
 
-            if (marqetaCardResponse != null) {
-                return marqetaCardResponse.getCards();
+                if (marqetaCardResponse != null) {
+                    return marqetaCardResponse.getCards();
+                }
             }
-        }
 
-        return new ArrayList<>();
+            return new ArrayList<>();
+        }
     }
 }

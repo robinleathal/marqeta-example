@@ -268,10 +268,61 @@ curl --location --request GET 'localhost:9999/transactions/user/1017b62c-6b61-4f
 
 ### Posting Marqeta Transactions Using the Spring Boot Service
 
-The Spring Boot service currently provides a simple POST command to create a new transaction on the Marqeta platform. 
+The Spring Boot service currently provides a simple POST command to create a new transaction on the Marqeta platform, which 
+utilizes the following `MarqetaTransactionRequest` request body payload.  The example above is for a $7.50 (USD) transaction 
+to The Friendly Tavern located in Zionsville, IN:
 
-// TODO - add POST functionality here.
+```json
+{
+    "amount": "7.50",
+    "mid": "11111",
+    "card_token": "9d32f3b7-2fb6-43ec-b4a8-99fc81312301",
+    "card_acceptor": {
+        "name": "The Friendly Tavern",
+        "address": "290 S. Main St",
+        "city": "Zionsville",
+        "state": "IN",
+        "zip": "46077",
+        "country": "USA"
+    },
+    "webhook": {
+        "endpoint": "https://mywebook.url.goes.here.com",
+        "username": "some_username",
+        "password": "some_password"
+    }
+}
+```
 
+The payload above can be included in the following `cURL` statement to leverage the Authorization API in the Spring Boot 
+service:
+
+```shell
+curl --location --request POST 'localhost:9999/authorization' \
+  --user APPLICATION_TOKEN_GOES_HERE:ADMIN_ACCESS_TOKEN_GOES_HERE \
+  --H 'accept: application/json' \
+  --H 'Content-Type: application/json' \
+  --d '{
+        "amount": "7.50",
+        "mid": "11111",
+        "card_token": "CARD_TOKEN_GOES_HERE",
+        "card_acceptor": {
+            "name": "The Friendly Tavern",
+            "address": "290 S. Main St",
+            "city": "Zionsville",
+            "state": "IN",
+            "zip": "46077",
+            "country": "USA"
+        },
+        "webhook": {
+            "endpoint": "SOME_WEBHOOK_URL_GOES_HERE",
+            "username": "USERNAME_GOES_HERE",
+            "password": "PASSWORD_GOES_HERE"
+        }
+    }'
+```
+
+Upon a successful POST submission, the full details of this transaction will be displayed.  Additionally, the Transactions 
+API can be utilized to view all transactions associated with the Randy Kern user.
 
 ## Additional Information
 
