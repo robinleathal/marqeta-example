@@ -271,7 +271,7 @@ curl --location --request GET 'localhost:9999/transactions/user/1017b62c-6b61-4f
 ### Posting Marqeta Transactions Using the Spring Boot Service
 
 The Spring Boot service currently provides a simple POST command to create a new transaction on the Marqeta platform, which 
-utilizes the following `MarqetaTransactionRequest` request body payload.  The example above is for a $7.50 (USD) transaction 
+utilizes the following `MarqetaTransactionRequest` request body payload.  The example below is for a $7.50 (USD) transaction 
 to The Friendly Tavern located in Zionsville, IN:
 
 ```json
