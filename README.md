@@ -15,7 +15,7 @@
 
 This repository is related to an article published on DZone.com:
 
-* TBD
+* [Leveraging Marqeta to Build a Payment Service in Spring Boot](https://dzone.com/articles/leveraging-marqeta-to-build-a-payment-service-in-s)
 
 To read more of my publications, please review one of the following URLs:
 
