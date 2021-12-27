@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -35,6 +36,18 @@ public class UserService {
             }
 
             return new ArrayList<>();
+        }
+    }
+
+    public User getUserByToken(String userToken) throws Exception {
+        try (CloseableHttpResponse closeableHttpResponse = MarqetaUtils.marqetaGet(marqetaConfigurationProperties, "/users/" + userToken, null)) {
+            HttpEntity httpEntity = closeableHttpResponse.getEntity();
+
+            if (httpEntity != null) {
+                return objectMapper.readValue(EntityUtils.toString(httpEntity), User.class);
+            }
+
+            throw new NoSuchElementException("Could not locate userToken=" + userToken);
         }
     }
 }
