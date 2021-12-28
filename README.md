@@ -249,6 +249,7 @@ The Spring Boot service currently provides GET functionality for the following M
 * Users configured in the Marqeta platform (Randy Kern)
 * Locate a single user for a given user token
 * Cards associated with a given user token
+* Payment cards associated with a given user token
 * Transactions associated with a given user token
 
 The following `cURL` command will return a list of users:
@@ -269,7 +270,13 @@ The following `cURL` command will provide a list of cards associated with the Ra
 curl --location --request GET 'localhost:9999/cards/user/1017b62c-6b61-4fcd-b663-5c81feab6524'
 ```
 
-The following `cURL` command will provide a list of transactions assocaited with the Randy Kern user token:
+The following `cURL` command will provide a list of *payment* cards associated with the Randy Kern user token:
+
+```shell
+curl --location --request GET 'localhost:9999/paymentcards/user/1017b62c-6b61-4fcd-b663-5c81feab6524'
+```
+
+The following `cURL` command will provide a list of transactions associated with the Randy Kern user token:
 
 ```shell
 curl --location --request GET 'localhost:9999/transactions/user/1017b62c-6b61-4fcd-b663-5c81feab6524'
