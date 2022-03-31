@@ -17,6 +17,7 @@ This repository is related to an articles published on DZone.com:
 
 * [Leveraging Marqeta to Build a Payment Service in Spring Boot](https://dzone.com/articles/leveraging-marqeta-to-build-a-payment-service-in-s)
 * [How I Built My Own Rewards Card](https://dzone.com/articles/how-i-built-my-own-rewards-card)
+* [Building a Buy Now, Pay Later Payment Solution](https://dzone.com/articles/building-a-buy-now-pay-later-payment-solution)
 
 To read more of my publications, please review one of the following URLs:
 
